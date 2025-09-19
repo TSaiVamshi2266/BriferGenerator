@@ -18,7 +18,9 @@ import groq
 def download_nltk_data():
     """Download required NLTK data with error handling"""
     try:
+        # Download both old and new punkt resources for compatibility
         nltk.download('punkt', quiet=True)
+        nltk.download('punkt_tab', quiet=True)
         nltk.download('stopwords', quiet=True)
         nltk.download('averaged_perceptron_tagger', quiet=True)
         return True
@@ -114,7 +116,7 @@ class NewsBriefGenerator:
                         "content": prompts[style]
                     }
                 ],
-                model="llama3-8b-8192",
+                model="llama-3.1-8b-instant",
                 max_tokens=300,
                 temperature=0.3
             )
@@ -143,8 +145,18 @@ class NewsBriefGenerator:
             return [word for word, _ in word_freq.most_common(top_n)]
             
         except Exception as e:
-            st.error(f"Error extracting keywords: {str(e)}")
-            return []
+            # Fallback to simple word extraction if NLTK fails
+            st.warning(f"NLTK processing failed, using simple word extraction: {str(e)}")
+            try:
+                # Simple tokenization fallback
+                import re
+                words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
+                words = [word for word in words if word not in {'the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can', 'had', 'her', 'was', 'one', 'our', 'out', 'day', 'get', 'has', 'him', 'his', 'how', 'man', 'new', 'now', 'old', 'see', 'two', 'way', 'who', 'boy', 'did', 'its', 'let', 'put', 'say', 'she', 'too', 'use'}]
+                word_freq = Counter(words)
+                return [word for word, _ in word_freq.most_common(top_n)]
+            except Exception as fallback_error:
+                st.error(f"Both NLTK and fallback keyword extraction failed: {str(fallback_error)}")
+                return []
     
     def compute_jaccard_similarity(self, set1: set, set2: set) -> float:
         """Compute Jaccard similarity between two sets"""
