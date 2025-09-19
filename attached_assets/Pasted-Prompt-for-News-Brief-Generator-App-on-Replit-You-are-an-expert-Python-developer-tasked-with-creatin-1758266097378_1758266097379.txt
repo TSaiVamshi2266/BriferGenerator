@@ -1,0 +1,140 @@
+Prompt for News Brief Generator App on Replit
+You are an expert Python developer tasked with creating a Streamlit-based web app called "News Brief Generator" on Replit. The app takes a news article (raw text or URL) as input, uses the Groq API to generate three summaries (bullet-point, abstract, and simple-English), and selects the most relevant summary based on keyword overlap with the original text using Jaccard similarity. The app has two logical parts: Part 1 for multi-style summarization and Part 2 for comparing and selecting the best summary. The code should be modular, concise, and deployable on Replit with minimal setup.
+Project Requirements
+Objective: Build a web app that:
+
+Accepts a news article as text or URL.
+Generates three summaries via the Groq API:
+
+Bullet-point: 5-7 concise points focusing on key events, people, and outcomes.
+Abstract: 150-200 words in a formal, academic style.
+Simple-English: Under 200 words in plain language (for kids/non-native speakers).
+
+
+Evaluates summaries by keyword overlap with the original article and selects the best one.
+Displays all summaries, highlights the most relevant one, and shows overlap scores and keywords.
+
+Tech Stack:
+
+Language: Python 3.x.
+Frontend: Streamlit for a simple, interactive UI (install via pip install streamlit).
+Backend: Groq API for summarization (use groq library, install via pip install groq).
+URL Fetching: requests (pre-installed in Replit) and beautifulsoup4 (install via pip install beautifulsoup4) for article text extraction.
+Keyword Analysis: NLTK for tokenization, stop word removal, stemming, and keyword extraction (install via pip install nltk).
+Environment: Store Groq API key in Streamlit secrets (.streamlit/secrets.toml) or via UI input.
+Model: Use llama3-8b-8192 for fast, cost-effective summarization.
+
+App Flow:
+
+Input:
+
+User enters article text in a Streamlit text area or a URL in a text input (mutually exclusive).
+If URL, fetch and extract main article text using BeautifulSoup (target <p> tags or main content divs).
+Validate input: Reject empty text/URLs; handle invalid URLs (e.g., 404, connection errors).
+
+
+Part 1: Multi-Style Summarization:
+
+Create a modular function to generate summaries using the Groq API with these prompts:
+
+Bullet-point: "Summarize the following news article in 5-7 concise bullet points, focusing on key events, people, and outcomes: [ARTICLE_TEXT]"
+Abstract: "Write a 150-200 word abstract of this news article, capturing the essence, background, and implications in a formal, academic style: [ARTICLE_TEXT]"
+Simple-English: "Rewrite this news article as a simple, easy-to-read summary in plain English (like for kids or non-native speakers), under 200 words: [ARTICLE_TEXT]"
+
+
+Limit each summary to 150-250 words to optimize API usage.
+Use async or threading for concurrent API calls if supported by the groq library to improve speed.
+Store summaries in a dictionary: {"bullet": text, "abstract": text, "simple": text}.
+Include a function to fetch article text from a URL, stripping irrelevant content (e.g., ads, navigation).
+
+
+Part 2: Comparing and Choosing the Best Summary:
+
+Create a function to extract keywords:
+
+Use NLTK to tokenize, remove stop words (download stopwords and punkt in code), and apply PorterStemmer.
+Extract top 20 nouns/verbs by frequency from the original article and each summary.
+
+
+Create a function to compute Jaccard similarity: len(intersection) / len(union) of keyword sets.
+Create a function to select the best summary:
+
+Compute overlap scores between each summary’s keywords and the original article’s keywords.
+Choose the summary with the highest score; default to bullet-point in ties.
+Return scores and top keywords for display.
+
+
+
+
+UI:
+
+Sidebar:
+
+Text input for Groq API key (warn to use .streamlit/secrets.toml for production).
+Table showing overlap scores for each summary (use st.table or st.dataframe).
+
+
+Main Page:
+
+Text area for article text, text input for URL, and a placeholder article (e.g., 300-word news snippet).
+"Generate Briefs" button to trigger summarization and evaluation.
+"Clear" button to reset inputs and outputs.
+Display results:
+
+Expanders (st.expander) for each summary (bullet, abstract, simple-English).
+Highlight the selected summary with its overlap score and top keywords (use st.success).
+Show errors (e.g., invalid input, API failures) with st.error.
+
+
+
+
+Styling: Use st.markdown for headings, keep UI clean and intuitive.
+
+
+
+Implementation Details:
+
+Error Handling:
+
+Validate inputs: Reject empty text/URLs; catch invalid URLs or API errors.
+Handle Groq API failures (e.g., invalid key, rate limits) with user-friendly messages.
+Gracefully handle NLTK download failures or parsing issues.
+
+
+Performance:
+
+Cache NLTK data downloads (e.g., nltk.download('punkt', quiet=True)).
+Minimize API calls by ensuring concise prompts and limiting summary length.
+
+
+Modularity:
+
+Organize code into functions (e.g., fetch_article(url), generate_summary(style, text), extract_keywords(text), compute_overlap(kw1, kw2), select_best(summaries, original)).
+Keep functions reusable and well-commented.
+
+
+Replit Setup:
+
+Include requirements.txt with: streamlit, groq, requests, beautifulsoup4, nltk.
+Provide a .streamlit/secrets.toml template: GROQ_API_KEY = "your-key-here".
+Include a README.md with instructions:
+
+Install dependencies via Replit’s package manager or pip install -r requirements.txt.
+Add API key to .streamlit/secrets.toml or UI input.
+Run streamlit run main.py in Replit’s console.
+
+
+Optionally, add a .replit file with run = "streamlit run main.py".
+
+
+Sample Input: Embed a 300-word placeholder news article in the UI for testing (e.g., a fake article about a recent tech event).
+Code Constraints: Keep total code under 500 lines, follow PEP 8, and include comments for clarity.
+
+Deliverables:
+Generate the complete code for the app, ready to copy-paste into a Replit Python project. Include:
+
+Main Python file (e.g., main.py) with Streamlit app and all logic (you decide file structure in Replit).
+requirements.txt for dependencies.
+.streamlit/secrets.toml template.
+README.md with setup and running instructions.
+Ensure the code is bug-free, modular, and tested with a sample article. Do not mention specific file splits (e.g., summarizer.py) since the user will handle structure in Replit.
