@@ -1,0 +1,6 @@
+streamlit>=1.28.0
+groq>=0.31.0
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+trafilatura>=1.6.0
+nltk>=3.8.0
