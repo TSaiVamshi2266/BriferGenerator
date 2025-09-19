@@ -198,18 +198,27 @@ def main():
     # Sidebar
     st.sidebar.header("Configuration")
     
-    # API Key input
-    api_key = st.sidebar.text_input(
-        "Groq API Key",
-        type="password",
-        value=os.getenv("GROQ_API_KEY", ""),
-        help="Enter your Groq API key or set it in .streamlit/secrets.toml"
-    )
+    # API Key handling - secure method
+    # First try to get from environment/secrets (deployed apps)
+    api_key = os.getenv("GROQ_API_KEY", "")
     
+    # Only show input field if no environment key is available
     if not api_key:
-        st.sidebar.warning("⚠️ Please enter your Groq API key to continue")
-        st.sidebar.info("💡 For production, store the key in `.streamlit/secrets.toml`")
-        return
+        api_key = st.sidebar.text_input(
+            "Groq API Key",
+            type="password",
+            placeholder="Enter your Groq API key",
+            help="Enter your Groq API key or set it in .streamlit/secrets.toml"
+        )
+        
+        if not api_key:
+            st.sidebar.warning("⚠️ Please enter your Groq API key to continue")
+            st.sidebar.info("💡 For production, store the key in `.streamlit/secrets.toml`")
+            return
+    else:
+        # Key is loaded from environment - show success message
+        st.sidebar.success("✅ API Key loaded securely from environment")
+        st.sidebar.info("🔒 Your API key is secure and not visible")
     
     # Initialize generator
     try:
