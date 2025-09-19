@@ -48,3 +48,7 @@ args = "uv add groq beautifulsoup4 nltk"
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 42769
+externalPort = 3000
