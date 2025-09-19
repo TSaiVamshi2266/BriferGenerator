@@ -1,0 +1,88 @@
+
+[     UTC     ] Logs for newsbriefs.streamlit.app/
+────────────────────────────────────────────────────────────────────────────────────────
+[03:28:38] 🖥 Provisioning machine...
+[03:28:38] 🎛 Preparing system...
+[03:28:38] ⛓ Spinning up manager process...
+[08:58:39] 🚀 Starting up repository: 'brifergenerator', branch: 'main', main module: 'app.py'
+[08:58:39] 🐙 Cloning repository...
+[08:58:40] 🐙 Cloning into '/mount/src/brifergenerator'...
+
+[08:58:40] 🐙 Cloned repository!
+[08:58:40] 🐙 Pulling code changes from Github...
+[08:58:40] 📦 Processing dependencies...
+Prepared 64 packages in 2.03s
+Installed 64 packages in 87ms
+ + altair==5.5.0
+ + annotated-types==0.7.0
+ + anyio==4.10.0
+ + attrs==25.3.0
+ + babel==2.17.0
+ + beautifulsoup4==4.13.5
+ + blinker==1.9.0
+ + cachetools==6.2.0
+ + certifi==2025.8.3
+ + charset-normalizer==3.4.3
+ + click==8.3.0
+ + courlan==1.3.2
+ + dateparser==1.2.2
+ + distro==1.9.0
+ + gitdb==4.0.12[2025-09-19 08:58:42.853538] 
+ + gitpython==3.1.45
+ + groq==0.31.1
+ + h11==0.16.0
+ + htmldate==1.9.3
+ + httpcore==1.0.9
+ + httpx==0.28.1
+ + idna==3.10
+ + jinja2==3.1.6
+ + joblib==1.5.2
+ + jsonschema==4.25.1
+ + jsonschema-specifications==2025.9.1
+ + justext==3.0.2
+ + lxml==5.4.0
+ + lxml-html-clean==0.4.2
+ + markupsafe==3.0.2
+ + narwhals==2.5.0
+ [2025-09-19 08:58:42.854006] + nltk==3.9.1
+ + numpy==2.3.3
+ + packaging==25.0
+ + [2025-09-19 08:58:42.854188] pandas==2.3.2
+ + pillow==11.3.0
+ + protobuf==6.32.1
+ + pyarrow==21.0.0
+ + pydantic==2.11.9
+ + pydantic-core==2.33.2[2025-09-19 08:58:42.854374] 
+ + pydeck==0.9.1
+ + python-dateutil==2.9.0.post0
+ + pytz==2025.2
+ + referencing==0.36.2
+ + regex==2025.9.18
+ + requests==2.32.5
+ + rpds-py==0.27.1
+ + six==1.17.0
+ + smmap==5.0.2
+ + sniffio==1.3.1
+ + soupsieve==2.8
+ + streamlit==1.49.1
+ + tenacity==9.1.2
+ + tld==0.13.1
+ + toml==0.10.2[2025-09-19 08:58:42.854890] 
+ + tornado==6.5.2
+ + tqdm==4.67.1
+ + trafilatura==2.0.0
+ + typing-extensions==4.15.0
+ + typing-inspection==0.4.1
+ + tzdata[2025-09-19 08:58:42.855040] ==2025.2
+ + tzlocal==5.3.1
+ + urllib3==2.5.0
+ + watchdog==6.0.0
+[08:58:42] 🐍 Python dependencies were installed from /mount/src/brifergenerator/uv.lock using uv-sync.
+[08:58:42] 📦 WARN: More than one requirements file detected in the repository. Available options: uv-sync /mount/src/brifergenerator/uv.lock, uv /mount/src/brifergenerator/requirements.txt, poetry /mount/src/brifergenerator/pyproject.toml. Used: uv-sync with /mount/src/brifergenerator/uv.lock
+Check if streamlit is installed
+Streamlit is already installed
+[08:58:44] 📦 Processed dependencies!
+
+
+
+[08:58:46] ❗️ The service has encountered an error while checking the health of the Streamlit app: Get "http://localhost:8501/healthz": dial tcp 127.0.0.1:8501: connect: connection refused
